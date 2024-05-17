@@ -18,7 +18,6 @@ def set_price(subscription_id: int):
         subscription.save()
 
 
-
 @shared_task(base=Singleton)
 def set_comment(subscription_id: int):
     from .models import Subscription
