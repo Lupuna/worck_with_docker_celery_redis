@@ -19,6 +19,7 @@ class Service(models.Model):
         if self.__full_price != self.full_price:
             for subscription in self.subscriptions.all():
                 tasks.set_price.delay(subscription.id)
+                tasks.set_comment.delay(subscription.id)
         return super().save(*args, **kwargs)
 
 class Plan(models.Model):
@@ -45,6 +46,7 @@ class Plan(models.Model):
         if self.__discount_percent != self.discount_percent:
             for subscription in self.subscriptions.all():
                 tasks.set_price.delay(subscription.id)
+                tasks.set_comment.delay(subscription.id)
         return super().save(*args, **kwargs)
 
 
@@ -53,3 +55,4 @@ class Subscription(models.Model):
     service = models.ForeignKey(Service, on_delete=models.PROTECT, related_name='subscriptions')
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT, related_name='subscriptions')
     price = models.IntegerField(default=0)
+    comment = models.CharField(max_length=254, null=True, blank=True)
