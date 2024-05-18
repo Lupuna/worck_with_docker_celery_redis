@@ -59,7 +59,7 @@ class Subscription(models.Model):
     service = models.ForeignKey(Service, on_delete=models.PROTECT, related_name='subscriptions')
     plan = models.ForeignKey(Plan, on_delete=models.PROTECT, related_name='subscriptions')
     price = models.IntegerField(default=0)
-    comment = models.CharField(max_length=254, null=True, blank=True)
+    comment = models.CharField(max_length=254, null=True, blank=True, db_index=True)
 
     # Ну до этого только гигочад додумается
     def save(self, *args, **kwargs):
