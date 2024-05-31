@@ -18,13 +18,6 @@ class Service(models.Model):
         super().__init__(*args, **kwargs)
         self.__full_price = self.full_price
 
-    def save(self, save_model=True, *args, **kwargs):
-        if self.__full_price != self.full_price:
-            for subscription in self.subscriptions.all():
-                tasks.set_price.delay(subscription.id)
-                tasks.set_comment.delay(subscription.id)
-        return super().save(*args, **kwargs)
-
 
 class Plan(models.Model):
 
